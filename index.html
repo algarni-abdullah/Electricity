@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="الكهرباء">
+<meta name="theme-color" content="#5b9bd5">
+<title>حاسبة الكهرباء</title>
+<link rel="apple-touch-icon" id="icon" href="">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+:root{--bg:#f5f7fb;--fg:#2c3e50;--card:#f4fbf4;--cb:#a8e0a8;--bd:#cfd8e3;--in:#fff;--box:#eef6fd;--link:#3b6fe0;--mut:#8a94a3;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171c;--fg:#e8ebef;--card:#18261d;--cb:#3b6b47;--bd:#364154;--in:#232b3a;--box:#1b2433;--link:#7aa2ff;--mut:#9aa6b5}}
+:root[data-theme="dark"]{--bg:#14171c;--fg:#e8ebef;--card:#18261d;--cb:#3b6b47;--bd:#364154;--in:#232b3a;--box:#1b2433;--link:#7aa2ff;--mut:#9aa6b5}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:"Noto Sans Arabic",-apple-system,"Geeza Pro",Tahoma,sans-serif;-webkit-text-size-adjust:100%}
+.wrap{max-width:620px;margin:0 auto;padding:16px 16px 40px}.wrap.wide{max-width:1100px}
+h2{margin:6px 0 14px;font-size:21px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.top h2{margin:0}
+.sm{height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--bd);background:var(--in);color:var(--fg);font:inherit;font-size:14px}
+label{display:block;text-align:center;font-weight:700;margin:16px 0 8px;font-size:17px}
+.fld{width:100%;height:52px;border-radius:12px;border:1px solid var(--bd);font:600 17px inherit;font-family:inherit;text-align:center;color:#2c3e50;outline:none}
+.fld.prev{background:linear-gradient(135deg,#e2e2e2,#c4c4c4);color:#666}
+.fld.curr{background:linear-gradient(135deg,#b3d6a6,#aee89a)}
+.fld.date{background:var(--in);color:var(--fg);font-weight:400;direction:ltr}
+.fld.days{background:var(--box);color:var(--fg);font-weight:700}
+.row{display:flex;gap:10px}.row>div{flex:1;min-width:0}
+details{margin-top:20px;background:var(--box);border:1px solid var(--bd);border-radius:12px;padding:6px 16px 16px}
+summary{cursor:pointer;color:var(--link);text-align:center;padding:12px 0;font-size:16px;list-style:none}
+summary::-webkit-details-marker{display:none}
+details .fld{background:var(--in);color:var(--fg);font-weight:400}
+.btn{display:block;width:100%;height:52px;border:0;border-radius:12px;color:#fff;font:700 18px inherit;font-family:inherit;margin-top:18px}
+.b1{background:#5b9bd5}.b2{background:#e57770}.b3{background:#3f9d6b}.b4{background:#8a6fd1}
+.res{margin-top:22px;border:1px solid var(--bd);border-radius:12px;overflow:hidden;background:var(--in)}
+.res div{display:flex;justify-content:space-between;padding:11px 14px;border-bottom:1px solid var(--bd);gap:10px}
+.res div:last-child{border:0}.res .tot{background:var(--box);font-weight:700;font-size:19px}
+.res b{direction:ltr;unicode-bidi:embed}
+.err{color:#e57770;text-align:center;margin-top:14px;font-weight:600}
+/* home */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.mc{background:var(--card);border:1.5px dashed var(--cb);border-radius:20px;padding:16px}
+.mc .h{display:flex;justify-content:space-between;align-items:center;min-height:56px}
+.mc .nm{font-weight:700;font-size:18px}
+.bdg{border:1.5px solid #a8e0a8;background:#e6f8e6;color:#2d6a3a;border-radius:20px;padding:6px 14px;font-weight:700;font-size:14px}
+.bdg.w{border-color:#f0c97a;background:#fff4dc;color:#8a6310}
+.pill{flex:1;border:1px solid var(--bd);border-radius:14px;padding:12px;text-align:center;color:var(--mut);font-weight:600;font-size:14px;background:var(--in)}
+.nx{margin:10px 0;border:1.5px solid var(--cb);border-radius:14px;padding:10px 12px;background:rgba(120,200,120,.12);font-weight:700;font-size:14px}
+.nx span{display:block;color:var(--mut);font-size:19px;margin-top:2px;direction:ltr;text-align:right}
+.ac{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ac button{height:46px;border:0;border-radius:12px;font:700 15px inherit;font-family:inherit;color:#111}
+.nw{background:#5aa3e4;color:#fff!important}.hs{background:#6fc7ec}.ed{background:#f0c33c}
+.empty{text-align:center;color:var(--mut);padding:40px 0}
+/* history */
+.sc{overflow-x:auto;background:var(--in);border:1px solid var(--bd);border-radius:16px}
+table{border-collapse:collapse;width:100%;min-width:980px;font-size:14px}
+th{background:rgba(128,128,128,.12);padding:12px 8px;font-weight:700}
+td{padding:10px 8px;text-align:center;border-top:1px solid var(--bd)}
+tr.r0 td{background:rgba(91,155,213,.10)}tr.r1 td{background:rgba(120,200,120,.10)}tr.r2 td{background:rgba(240,160,120,.10)}tr.r3 td{background:rgba(150,130,220,.10)}
+.tb{display:inline-block;background:#3b5bdb;color:#fff;border-radius:14px;padding:3px 10px;font-weight:700}
+.tb.z{background:#d9534f}
+td small{display:block;margin-top:2px}
+.ob{display:flex;flex-direction:column;gap:6px;min-width:120px}
+.ob button{height:36px;border:0;border-radius:10px;color:#fff;font:700 13px inherit;font-family:inherit}
+.g{background:#6fcf6f}.bl{background:#79a2f0}.rd{background:#d4574a}.gr{background:#697386}
+.toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 18px;border-radius:20px;font-size:14px;opacity:0;transition:.3s;pointer-events:none;z-index:9}
+.toast.on{opacity:1}.hide{display:none!important}
+/* invoice */
+#inv{background:#ddd;min-height:100vh;padding:14px 10px 40px}
+.acts{display:flex;gap:8px;max-width:620px;margin:0 auto 12px}
+.acts button{flex:1;height:44px;border-radius:10px;border:0;font:700 15px inherit;font-family:inherit;background:#5b9bd5;color:#fff}
+.acts button.k{background:#777}
+.sheet{background:#fff;color:#000;max-width:620px;margin:0 auto;border-top:10px solid #000;border-bottom:10px solid #000;padding:26px 24px 36px}
+.sheet h1{font-size:26px;margin:6px 0 20px}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;font-size:15px;margin-bottom:22px}.meta .f{grid-column:1/-1}
+.th,.tr{display:grid;grid-template-columns:1fr auto 64px;gap:8px;padding:11px 4px;font-size:15px;align-items:center}
+.th{font-weight:700;font-size:16px}.tr .v{direction:ltr;text-align:right}
+.sep{border-top:3px solid #000}
+.grand{margin-top:6px;border:3px solid #000;background:#b8b8b8;padding:10px 6px}
+.grand .tr{padding:2px 4px;font-weight:700;font-size:20px}.grand small{display:block;padding:0 4px;font-size:12px}
+</style>
+</head>
+<body>
+<div id="home" class="wrap wide">
+  <div class="top"><h2>⚡ عدادات الكهرباء</h2></div>
+  <div class="top" style="justify-content:flex-start;flex-wrap:wrap"><button class="sm" id="addM">＋ إضافة عداد</button><button class="sm" id="bk">⬇ نسخة احتياطية</button><button class="sm" id="rs">⬆ استرجاع نسخة</button><input type="file" id="fi" accept=".json,application/json" class="hide"></div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<div id="calc" class="wrap hide">
+  <div class="top"><h2 id="ct"></h2><button class="sm" id="cb">رجوع →</button></div>
+  <div class="row">
+    <div><label for="pd">تاريخ القراءة السابقة</label><input id="pd" class="fld date" inputmode="numeric" placeholder="يوم/شهر/سنة" maxlength="10"></div>
+    <div><label for="cd">تاريخ القراءة الحالية</label><input id="cd" class="fld date" inputmode="numeric" placeholder="يوم/شهر/سنة" maxlength="10"></div>
+  </div>
+  <label>عدد الأيام</label><input id="days" class="fld days" readonly value="—">
+  <label for="prev">قراءة العداد السابقة</label><input id="prev" type="number" step="any" inputmode="decimal" class="fld prev" placeholder="0.00">
+  <label for="curr">قراءة العداد الحالية</label><input id="curr" type="number" step="any" inputmode="decimal" class="fld curr" placeholder="مثال: 2000">
+  <details>
+    <summary>⚡ إعدادات شرائح الكهرباء والرسوم (قابلة للتعديل) ⌄</summary>
+    <label for="p1">سعر الشريحة الأولى (هللة)</label><input id="p1" type="number" step="any" inputmode="decimal" class="fld">
+    <label for="m1">أقصى استهلاك للشريحة الأولى (كيلوواط)</label><input id="m1" type="number" step="any" inputmode="decimal" class="fld">
+    <label for="p2">سعر الشريحة الثانية (هللة)</label><input id="p2" type="number" step="any" inputmode="decimal" class="fld">
+    <label for="fee">رسوم خدمة العداد</label><input id="fee" type="number" step="any" inputmode="decimal" class="fld">
+    <label for="tax">الضريبة (%)</label><input id="tax" type="number" step="any" inputmode="decimal" class="fld">
+  </details>
+  <button class="btn b1" id="go">اضغط هنا للحساب</button>
+  <div id="err" class="err hide"></div>
+  <div id="out" class="hide"><div class="res" id="res"></div>
+    <button class="btn b3" id="mk">حفظ في السجل وإصدار الفاتورة</button>
+    <button class="btn b4" id="sv">حفظ في السجل فقط</button></div>
+  <button class="btn b2" id="rst">إعادة تعيين</button>
+</div>
+
+<div id="hist" class="wrap wide hide">
+  <div class="top"><h2 id="ht"></h2><button class="sm" id="hb">رجوع →</button></div>
+  <div class="top"><div>المعرّف: <b id="hid" style="color:var(--link);font-size:20px"></b></div><button class="sm" id="dm">🗑 حذف العداد</button></div>
+  <div class="sc"><table><thead><tr><th>رقم الفاتورة</th><th>اسم العداد</th><th>التاريخ</th><th>سابقة</th><th>حالية</th><th>الاستهلاك</th><th>ش1</th><th>ش2</th><th>رسوم</th><th>ضريبة</th><th>إجمالي</th><th>خيارات</th></tr></thead><tbody id="tb"></tbody></table></div>
+</div>
+
+<div id="inv" class="hide">
+  <div class="acts"><button id="pdf">⬇ حفظ PDF</button><button id="sh">⤴ مشاركة</button><button id="ib" class="k">رجوع</button></div>
+  <div class="sheet" id="sheet"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* نسخة الاستضافة: بديل لخاصية الحفظ + تسجيل العمل بدون إنترنت */
+if(!window.claude){window.claude={use:function(n){
+ if(n!=="downloads")return Promise.resolve(null);
+ return Promise.resolve({save:function(o){return new Promise(function(res,rej){
+  var t=/\.pdf$/i.test(o.filename)?"application/pdf":"application/json";
+  var b=o.data instanceof Blob?o.data:new Blob([o.data],{type:t});
+  var f=null;try{f=new File([b],o.filename,{type:t})}catch(e){}
+  if(f&&navigator.canShare&&navigator.canShare({files:[f]})){
+   navigator.share({files:[f]}).then(function(){res({status:"saved"})},function(e){rej({code:e&&e.name==="AbortError"?"declined":"unavailable"})});return}
+  var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=o.filename;document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},4000);res({status:"saved"});
+ })}})}}}
+if("serviceWorker" in navigator)window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});
+</script>
+<script>
+(function(){
+var K="elec_v2",DEF={p1:20,m1:6000,p2:30,fee:10,tax:15},D={meters:[],no:0};
+var $=function(i){return document.getElementById(i)};
+function rid(){return String(1000+Math.floor(Math.random()*9000))}
+try{var raw=localStorage.getItem(K);
+ if(raw)D=JSON.parse(raw);
+ else{var o=localStorage.getItem("elec_meters_v1");
+  if(o)JSON.parse(o).meters.forEach(function(m){D.meters.push({id:m.id,name:m.name,sym:"⚡",ident:rid(),prev:m.prev||"",prevDate:m.prevDate||"",s:m.s||JSON.parse(JSON.stringify(DEF)),rd:[]})})}
+}catch(e){}
+function save(){try{localStorage.setItem(K,JSON.stringify(D))}catch(e){}}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function f2(n){return (Math.round(n*100)/100).toFixed(2)}
+function fm(n){return f2(n).replace(/\B(?=(\d{3})+(?!\d))/g,",")}
+function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(function(){e.classList.remove("on")},2000)}
+// dates: stored ISO yyyy-mm-dd, shown dd/mm/yyyy
+function dmy(i){if(!i)return "—";var p=i.split("-");return p[2]+"/"+p[1]+"/"+p[0]}
+function iso(s){var m=/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(s||"");if(!m)return null;var d=+m[1],mo=+m[2],y=+m[3],t=new Date(y,mo-1,d);
+ if(t.getFullYear()!==y||t.getMonth()!==mo-1||t.getDate()!==d)return null;return y+"-"+("0"+mo).slice(-2)+"-"+("0"+d).slice(-2)}
+function today(){var d=new Date();return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)}
+function addDays(i,n){var p=i.split("-"),d=new Date(+p[0],+p[1]-1,+p[2]+n);return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)}
+function nextDate(i){var p=i.split("-"),d=new Date(+p[0],+p[1],28);return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-28"}
+function hm(ts){var d=new Date(ts);return("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)}
+function mask(e){var v=e.target.value.replace(/\D/g,"").slice(0,8);e.target.value=v.slice(0,2)+(v.length>2?"/"+v.slice(2,4):"")+(v.length>4?"/"+v.slice(4):"")}
+["pd","cd"].forEach(function(i){$(i).addEventListener("input",function(e){mask(e);days()})});
+
+var cur=null,last=null,viewR=null;
+function M(id){for(var i=0;i<D.meters.length;i++)if(D.meters[i].id===id)return D.meters[i];return null}
+function show(v){["home","calc","hist","inv"].forEach(function(x){$(x).classList.toggle("hide",x!==v)});window.scrollTo(0,0)}
+
+// ---- home
+function home(){
+  var h="";
+  D.meters.forEach(function(m){
+    var l=m.rd.length?m.rd[m.rd.length-1]:null,n=new Date(),ok=false;
+    if(l){var p=l.cd.split("-");ok=+p[0]===n.getFullYear()&&+p[1]===n.getMonth()+1}
+    h+='<div class="mc"><div class="h"><span class="bdg'+(ok?'':' w')+'">'+(ok?"مقروء":"بانتظار القراءة")+'</span><span class="nm">'+esc(m.sym||"⚡")+' '+esc(m.name)+'</span></div>'+
+    '<div style="display:flex;gap:8px;margin-top:10px"><div class="pill">🧾 آخر فاتورة: '+(l?f2(l.tot):"—")+'</div><div class="pill">عدد القراءات: '+m.rd.length+'</div></div>'+
+    '<div class="nx">📅 موعد القراءة القادم المقترح<span>'+(l?dmy(nextDate(l.cd)):"—")+'</span></div>'+
+    '<div class="ac"><button class="nw" data-a="new" data-id="'+m.id+'">＋ شهر جديد</button><button class="hs" data-a="hist" data-id="'+m.id+'">🕘 السجل</button><button class="ed" data-a="edit" data-id="'+m.id+'">✎ تعديل الاسم والرمز</button></div></div>';
+  });
+  $("grid").innerHTML=h||'<div class="empty">لا توجد عدادات بعد، اضغط «إضافة عداد»</div>';
+  show("home");
+}
+$("grid").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;var m=M(b.dataset.id);if(!m)return;
+  if(b.dataset.a==="new")openCalc(m);
+  else if(b.dataset.a==="hist")openHist(m);
+  else{var n=prompt("اسم العداد:",m.name);if(n&&n.trim())m.name=n.trim();var s=prompt("الرمز (إيموجي):",m.sym||"⚡");if(s&&s.trim())m.sym=s.trim();save();home()}
+});
+$("addM").addEventListener("click",function(){
+  var n=prompt("اسم العداد الجديد:");if(!n||!n.trim())return;
+  D.meters.push({id:"m"+Date.now().toString(36),name:n.trim(),sym:"⚡",ident:rid(),prev:"",prevDate:"",s:JSON.parse(JSON.stringify(DEF)),rd:[]});save();home();
+});
+
+$("bk").addEventListener("click",function(){
+  (window.claude?claude.use("downloads"):Promise.resolve(null)).then(function(d){
+    if(!d)return toast("الحفظ غير متاح هنا");
+    return d.save({filename:"elec-backup-"+today()+".json",data:JSON.stringify(D)}).then(function(){toast("تم حفظ النسخة")},function(e){if(!e||e.code!=="declined")toast("تعذر الحفظ")});
+  });
+});
+$("rs").addEventListener("click",function(){$("fi").click()});
+$("fi").addEventListener("change",function(){
+  var f=$("fi").files[0];if(!f)return;var rd=new FileReader();
+  rd.onload=function(){try{var o=JSON.parse(rd.result);if(!o||!Array.isArray(o.meters))throw 0;
+    if(!confirm("استبدال البيانات الحالية بالنسخة المحددة؟"))return;D=o;save();home();toast("تم الاسترجاع")}catch(e){toast("ملف غير صالح")}};
+  rd.readAsText(f);$("fi").value="";
+});
+// ---- calc
+function days(){
+  var a=iso($("pd").value),b=iso($("cd").value);
+  if(a&&b){var n=Math.round((new Date(b)-new Date(a))/864e5);$("days").value=n>=0?n:"—";return n>=0?n:null}
+  $("days").value="—";return null;
+}
+function openCalc(m){
+  cur=m;$("ct").textContent=(m.sym||"⚡")+" "+m.name;
+  $("prev").value=m.prev;$("pd").value=m.prevDate?dmy(m.prevDate):"";$("curr").value="";$("cd").value=dmy(today());
+  ["p1","m1","p2","fee","tax"].forEach(function(k){$(k).value=m.s[k]});
+  clr();days();show("calc");
+}
+function clr(){$("out").classList.add("hide");$("err").classList.add("hide");last=null}
+function err(t){clr();$("err").textContent=t;$("err").classList.remove("hide")}
+["p1","m1","p2","fee","tax"].forEach(function(k){$(k).addEventListener("input",function(){var v=parseFloat($(k).value);if(!isNaN(v)&&cur){cur.s[k]=v;save()}})});
+$("cb").addEventListener("click",home);
+$("rst").addEventListener("click",function(){$("curr").value="";$("cd").value=dmy(today());clr();days()});
+$("go").addEventListener("click",function(){
+  var p=parseFloat($("prev").value),c=parseFloat($("curr").value),pd=iso($("pd").value),cd=iso($("cd").value);
+  if(isNaN(p)||isNaN(c))return err("أدخل القراءة السابقة والحالية");
+  if(!cd)return err("أدخل تاريخ القراءة الحالية بصيغة يوم/شهر/سنة");
+  if($("pd").value&&!pd)return err("تاريخ القراءة السابقة غير صحيح (يوم/شهر/سنة)");
+  if(c<p)return err("القراءة الحالية أقل من السابقة");
+  var s=cur.s,n=days(),use=c-p,u1=Math.min(use,s.m1),u2=Math.max(0,use-s.m1);
+  var t1=u1*s.p1/100,t2=u2*s.p2/100,sub=t1+t2+s.fee,vat=sub*s.tax/100;
+  last={name:cur.name,pd:pd||"",cd:cd,days:n,prev:p,curr:c,use:use,u1:u1,u2:u2,p1:s.p1,p2:s.p2,t1:t1,t2:t2,fee:s.fee,sub:sub,taxp:s.tax,vat:vat,tot:sub+vat,saved:false};
+  function R(a,b,c){return'<div'+(c?' class="tot"':'')+'><span>'+a+'</span><b>'+b+'</b></div>'}
+  $("err").classList.add("hide");
+  $("res").innerHTML=R("عدد الأيام",n===null?"—":n)+R("الفرق بين القراءتين (كيلوواط)",f2(use))+
+   R("الشريحة الأولى ("+f2(u1)+" × "+(s.p1/100).toFixed(2)+")",f2(t1)+" ريال")+R("الشريحة الثانية ("+f2(u2)+" × "+(s.p2/100).toFixed(2)+")",f2(t2)+" ريال")+
+   R("رسوم الخدمة",f2(s.fee)+" ريال")+R("المجموع قبل الضريبة",f2(sub)+" ريال")+R("الضريبة ("+s.tax+"%)",f2(vat)+" ريال")+R("الإجمالي المستحق",f2(sub+vat)+" ريال",1);
+  $("out").classList.remove("hide");
+});
+function commit(){
+  if(!last||last.saved)return last;
+  D.no=(D.no||0)+1;last.no=String(D.no).padStart(6,"0");last.ts=Date.now();last.saved=true;
+  var r=JSON.parse(JSON.stringify(last));delete r.saved;cur.rd.push(r);
+  cur.prev=String(last.curr);cur.prevDate=last.cd;save();return last;
+}
+$("sv").addEventListener("click",function(){if(!last)return;commit();toast("تم الحفظ في السجل");openHist(cur)});
+$("mk").addEventListener("click",function(){if(!last)return;commit();showInv(cur.rd[cur.rd.length-1],"calc")});
+
+// ---- history
+function openHist(m){
+  cur=m;$("ht").textContent="🕘 سجل قراءات العداد";$("hid").textContent=m.ident;
+  var h="";
+  m.rd.slice().reverse().forEach(function(r,i){
+    function tb(u,p){return'<span class="tb'+(u===0?' z':'')+'">'+fm(u)+'</span><small>'+p+' هللة</small>'}
+    h+='<tr class="r'+(i%4)+'"><td>'+r.no+'</td><td>'+esc(r.name)+'</td><td>'+dmy(r.cd)+'<small>'+hm(r.ts)+'</small></td><td>'+fm(r.prev)+'</td><td>'+fm(r.curr)+'</td><td>'+fm(r.use)+'</td><td>'+tb(r.u1,r.p1)+'</td><td>'+tb(r.u2,r.p2)+'</td><td>'+f2(r.fee)+'</td><td>'+f2(r.taxp)+'%</td><td><b>'+f2(r.tot)+' ر.س</b></td>'+
+    '<td><div class="ob"><button class="g" data-a="wa" data-n="'+r.no+'">مشاركة</button><button class="bl" data-a="new">شهر جديد</button><button class="rd" data-a="inv" data-n="'+r.no+'">فاتورة / PDF</button><button class="gr" data-a="del" data-n="'+r.no+'">حذف</button></div></td></tr>';
+  });
+  $("tb").innerHTML=h||'<tr><td colspan="12" class="empty">لا توجد قراءات محفوظة</td></tr>';
+  show("hist");
+}
+function RD(no){for(var i=0;i<cur.rd.length;i++)if(cur.rd[i].no===no)return i;return -1}
+$("tb").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;var a=b.dataset.a,i=RD(b.dataset.n);
+  if(a==="new")return openCalc(cur);
+  if(a==="wa")return share(cur.rd[i]);
+  if(a==="inv")return showInv(cur.rd[i],"hist");
+  if(a==="del"&&confirm("حذف هذه القراءة؟")){
+    var r=cur.rd[i];cur.rd.splice(i,1);
+    if(i===cur.rd.length){cur.prev=String(r.prev);cur.prevDate=r.pd||""}
+    save();openHist(cur);
+  }
+});
+$("hb").addEventListener("click",home);
+$("dm").addEventListener("click",function(){
+  if(!confirm("حذف العداد «"+cur.name+"» وكل سجلاته؟"))return;
+  D.meters=D.meters.filter(function(x){return x!==cur});save();home();
+});
+
+// ---- invoice
+var back="home";
+function showInv(r,from){
+  viewR=r;back=from;
+  function row(a,v,u){return'<div class="tr"><span>'+a+'</span><span class="v">'+v+'</span><span>'+u+'</span></div>'}
+  $("sheet").innerHTML='<h1>فاتورة استهلاك الكهرباء</h1><div class="meta"><div class="f">اسم المشترك : '+esc(r.name)+'</div>'+
+   '<div>بداية القراءة : '+dmy(r.pd)+'</div><div>عدد الأيام : '+(r.days===null?"—":r.days)+'</div><div class="f">نهاية القراءة : '+dmy(r.cd)+'</div>'+
+   '<div class="f">رقم الفاتورة : '+r.no+'</div></div>'+
+   '<div class="th"><span>الوصف</span><span>القيمة</span><span></span></div>'+
+   row("القراءة السابقة",f2(r.prev),"كيلو واط")+row("القراءة الحالية",f2(r.curr),"كيلو واط")+row("الاستهلاك الإجمالي",f2(r.use),"كيلو واط")+'<div class="sep"></div>'+
+   row("الشريحة الأولى: الاستهلاك",f2(r.u1),"كيلو واط")+row("الشريحة الأولى: السعر لكل كيلو واط",r.p1,"هللة")+row("الشريحة الأولى: الإجمالي",f2(r.t1),"ريال")+'<div class="sep"></div>'+
+   row("الشريحة الثانية: الاستهلاك",f2(r.u2),"كيلو واط")+row("الشريحة الثانية: السعر لكل كيلو واط",r.p2,"هللة")+row("الشريحة الثانية: الإجمالي",f2(r.t2),"ريال")+'<div class="sep"></div>'+
+   row("رسوم الخدمة (ثابت)",f2(r.fee),"ريال")+
+   '<div class="grand"><div class="tr"><span>الإجمالي المستحق</span><span class="v">'+f2(r.tot)+'</span><span>ريال</span></div><small>شامل ضريبة القيمة المضافة ('+r.taxp+'%): '+f2(r.vat)+' ريال</small></div>';
+  show("inv");
+}
+$("ib").addEventListener("click",function(){back==="hist"?openHist(cur):back==="calc"?openHist(cur):home()});
+function txt(r){return"فاتورة استهلاك الكهرباء\nالمشترك: "+r.name+"\nمن "+dmy(r.pd)+" إلى "+dmy(r.cd)+" ("+(r.days===null?"—":r.days)+" يوم)\nالاستهلاك: "+f2(r.use)+" كيلو واط\nالإجمالي المستحق: "+f2(r.tot)+" ريال (شامل الضريبة)"}
+function share(r){
+  var t=txt(r);
+  if(navigator.share){navigator.share({text:t}).catch(function(){})}
+  else{var w=window.open("https://wa.me/?text="+encodeURIComponent(t),"_blank");if(!w){try{navigator.clipboard.writeText(t);toast("تم نسخ ملخص الفاتورة")}catch(e){toast("تعذرت المشاركة")}}}
+}
+$("sh").addEventListener("click",function(){if(viewR)share(viewR)});
+function mkPdf(canvas){
+  var jb=atob(canvas.toDataURL("image/jpeg",0.92).split(",")[1]),jpg=new Uint8Array(jb.length);
+  for(var i=0;i<jb.length;i++)jpg[i]=jb.charCodeAt(i);
+  var w=canvas.width,h=canvas.height,iw=555,ih=iw*h/w,PH=Math.ceil(ih+40),parts=[],len=0,off=[];
+  function add(x){if(typeof x==="string"){var u=new Uint8Array(x.length);for(var i=0;i<x.length;i++)u[i]=x.charCodeAt(i)&255;x=u}parts.push(x);len+=x.length}
+  function obj(n,head,st){off[n]=len;add(n+" 0 obj\n"+head+(st?"\nstream\n":"\n"));if(st){add(st);add("\nendstream\n")}add("endobj\n")}
+  var cs="q "+iw+" 0 0 "+ih.toFixed(2)+" 20 20 cm /Im0 Do Q";
+  add("%PDF-1.4\n");
+  obj(1,"<< /Type /Catalog /Pages 2 0 R >>");
+  obj(2,"<< /Type /Pages /Kids [3 0 R] /Count 1 >>");
+  obj(3,"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 "+PH+"] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>");
+  obj(4,"<< /Type /XObject /Subtype /Image /Width "+w+" /Height "+h+" /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length "+jpg.length+" >>",jpg);
+  obj(5,"<< /Length "+cs.length+" >>",cs);
+  var xr=len;add("xref\n0 6\n0000000000 65535 f \n");
+  for(var k=1;k<=5;k++)add(("0000000000"+off[k]).slice(-10)+" 00000 n \n");
+  add("trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n"+xr+"\n%%EOF");
+  return new Blob(parts,{type:"application/pdf"});
+}
+$("pdf").addEventListener("click",function(){
+  if(!viewR)return;
+  if(!window.html2canvas)return toast("تعذر تحميل أداة التصدير، تأكد من الاتصال");
+  toast("جارٍ تجهيز الملف...");
+  html2canvas($("sheet"),{scale:2,backgroundColor:"#ffffff"}).then(function(cv){
+    var blob=mkPdf(cv),nm="فاتورة-"+viewR.name+"-"+viewR.no+".pdf";
+    return (window.claude?claude.use("downloads"):Promise.resolve(null)).then(function(d){
+      if(!d){toast("الحفظ غير متاح هنا");return}
+      return d.save({filename:nm,data:blob}).then(function(){toast("تم الحفظ")},function(e){if(!e||e.code!=="declined")toast("تعذر الحفظ")});
+    });
+  }).catch(function(){toast("تعذر إنشاء الملف")});
+});
+
+try{var cv=document.createElement("canvas");cv.width=cv.height=180;var g=cv.getContext("2d"),gr=g.createLinearGradient(0,0,180,180);
+ gr.addColorStop(0,"#5b9bd5");gr.addColorStop(1,"#3b6fe0");g.fillStyle=gr;g.fillRect(0,0,180,180);g.fillStyle="#ffd84d";g.beginPath();
+ g.moveTo(104,22);g.lineTo(52,102);g.lineTo(84,102);g.lineTo(70,158);g.lineTo(130,74);g.lineTo(96,74);g.closePath();g.fill();$("icon").href=cv.toDataURL("image/png")}catch(e){}
+save();home();
+})();
+</script>
+</body>
+</html>
