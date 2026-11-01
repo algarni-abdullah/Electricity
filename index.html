@@ -22,19 +22,19 @@ body{background:var(--bg);color:var(--fg);font-family:"Noto Sans Arabic",-apple-
 h2{margin:6px 0 14px;font-size:21px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
 .top h2{margin:0}
-.sm{height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--bd);background:var(--in);color:var(--fg);font:inherit;font-size:14px}
-label{display:block;text-align:center;font-weight:700;margin:16px 0 8px;font-size:17px}
-.fld{width:100%;height:52px;border-radius:12px;border:1px solid var(--bd);font:600 17px inherit;font-family:inherit;text-align:center;color:#2c3e50;outline:none}
+.sm{height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--bd);background:var(--in);color:var(--fg);font:inherit;font-size:15px}
+label{display:block;text-align:center;font-weight:700;margin:16px 0 8px;font-size:18px}
+.fld{width:100%;height:48px;border-radius:12px;border:1px solid var(--bd);font-weight:600;font-size:19px;font-family:inherit;text-align:center;color:#2c3e50;outline:none}
 .fld.prev{background:linear-gradient(135deg,#e2e2e2,#c4c4c4);color:#666}
 .fld.curr{background:linear-gradient(135deg,#b3d6a6,#aee89a)}
 .fld.date{background:var(--in);color:var(--fg);font-weight:400;direction:ltr}
 .fld.days{background:var(--box);color:var(--fg);font-weight:700}
-.row{display:flex;gap:10px}.row>div{flex:1;min-width:0}
+.row{display:block}.dsel{display:flex;gap:6px}.dsel select{flex:1;min-width:0;height:48px;border-radius:12px;border:1px solid var(--bd);background:var(--in);color:var(--fg);font-size:17px;font-family:inherit;text-align:center;text-align-last:center}
 details{margin-top:20px;background:var(--box);border:1px solid var(--bd);border-radius:12px;padding:6px 16px 16px}
 summary{cursor:pointer;color:var(--link);text-align:center;padding:12px 0;font-size:16px;list-style:none}
 summary::-webkit-details-marker{display:none}
 details .fld{background:var(--in);color:var(--fg);font-weight:400}
-.btn{display:block;width:100%;height:52px;border:0;border-radius:12px;color:#fff;font:700 18px inherit;font-family:inherit;margin-top:18px}
+.btn{display:block;width:100%;height:52px;border:0;border-radius:12px;color:#fff;font-weight:700;font-size:18px;font-family:inherit;margin-top:18px}
 .b1{background:#5b9bd5}.b2{background:#e57770}.b3{background:#3f9d6b}.b4{background:#8a6fd1}
 .res{margin-top:22px;border:1px solid var(--bd);border-radius:12px;overflow:hidden;background:var(--in)}
 .res div{display:flex;justify-content:space-between;padding:11px 14px;border-bottom:1px solid var(--bd);gap:10px}
@@ -44,15 +44,15 @@ details .fld{background:var(--in);color:var(--fg);font-weight:400}
 /* home */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
 .mc{background:var(--card);border:1.5px dashed var(--cb);border-radius:20px;padding:16px}
-.mc .h{display:flex;justify-content:space-between;align-items:center;min-height:56px}
+.mc .h{display:flex;justify-content:space-between;align-items:center;min-height:80px}
 .mc .nm{font-weight:700;font-size:18px}
 .bdg{border:1.5px solid #a8e0a8;background:#e6f8e6;color:#2d6a3a;border-radius:20px;padding:6px 14px;font-weight:700;font-size:14px}
 .bdg.w{border-color:#f0c97a;background:#fff4dc;color:#8a6310}
-.pill{flex:1;border:1px solid var(--bd);border-radius:14px;padding:12px;text-align:center;color:var(--mut);font-weight:600;font-size:14px;background:var(--in)}
+.pill{flex:1;border:1px solid var(--bd);border-radius:14px;padding:12px;text-align:center;color:var(--mut);font-weight:700;font-size:15px;background:var(--in)}
 .nx{margin:10px 0;border:1.5px solid var(--cb);border-radius:14px;padding:10px 12px;background:rgba(120,200,120,.12);font-weight:700;font-size:14px}
-.nx span{display:block;color:var(--mut);font-size:19px;margin-top:2px;direction:ltr;text-align:right}
+.nx span{display:block;color:var(--mut);font-size:17px;margin-top:2px;direction:ltr;text-align:right}
 .ac{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.ac button{height:46px;border:0;border-radius:12px;font:700 15px inherit;font-family:inherit;color:#111}
+.ac button{height:40px;border:0;border-radius:12px;font-weight:700;font-size:16px;font-family:inherit;color:#111}
 .nw{background:#5aa3e4;color:#fff!important}.hs{background:#6fc7ec}.ed{background:#f0c33c}
 .empty{text-align:center;color:var(--mut);padding:40px 0}
 /* history */
@@ -65,14 +65,14 @@ tr.r0 td{background:rgba(91,155,213,.10)}tr.r1 td{background:rgba(120,200,120,.1
 .tb.z{background:#d9534f}
 td small{display:block;margin-top:2px}
 .ob{display:flex;flex-direction:column;gap:6px;min-width:120px}
-.ob button{height:36px;border:0;border-radius:10px;color:#fff;font:700 13px inherit;font-family:inherit}
+.ob button{height:32px;border:0;border-radius:10px;color:#fff;font-weight:700;font-size:13px;font-family:inherit}
 .g{background:#6fcf6f}.bl{background:#79a2f0}.rd{background:#d4574a}.gr{background:#697386}
 .toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 18px;border-radius:20px;font-size:14px;opacity:0;transition:.3s;pointer-events:none;z-index:9}
 .toast.on{opacity:1}.hide{display:none!important}
 /* invoice */
 #inv{background:#ddd;min-height:100vh;padding:14px 10px 40px}
 .acts{display:flex;gap:8px;max-width:620px;margin:0 auto 12px}
-.acts button{flex:1;height:44px;border-radius:10px;border:0;font:700 15px inherit;font-family:inherit;background:#5b9bd5;color:#fff}
+.acts button{flex:1;height:44px;border-radius:10px;border:0;font-weight:700;font-size:15px;font-family:inherit;background:#5b9bd5;color:#fff}
 .acts button.k{background:#777}
 .sheet{background:#fff;color:#000;max-width:620px;margin:0 auto;border-top:10px solid #000;border-bottom:10px solid #000;padding:26px 24px 36px}
 .sheet h1{font-size:26px;margin:6px 0 20px}
@@ -92,10 +92,10 @@ td small{display:block;margin-top:2px}
 </div>
 
 <div id="calc" class="wrap hide">
-  <div class="top"><h2 id="ct"></h2><button class="sm" id="cb">رجوع →</button></div>
+  <div class="top"><h2 id="ct"></h2><button class="sm" id="cb">رجوع ←</button></div>
   <div class="row">
-    <div><label for="pd">تاريخ القراءة السابقة</label><input id="pd" class="fld date" inputmode="numeric" placeholder="يوم/شهر/سنة" maxlength="10"></div>
-    <div><label for="cd">تاريخ القراءة الحالية</label><input id="cd" class="fld date" inputmode="numeric" placeholder="يوم/شهر/سنة" maxlength="10"></div>
+    <div><label for="pd">تاريخ القراءة السابقة</label><input id="pd" type="hidden"><div class="dsel" data-t="pd"></div></div>
+    <div><label for="cd">تاريخ القراءة الحالية</label><input id="cd" type="hidden"><div class="dsel" data-t="cd"></div></div>
   </div>
   <label>عدد الأيام</label><input id="days" class="fld days" readonly value="—">
   <label for="prev">قراءة العداد السابقة</label><input id="prev" type="number" step="any" inputmode="decimal" class="fld prev" placeholder="0.00">
@@ -117,13 +117,13 @@ td small{display:block;margin-top:2px}
 </div>
 
 <div id="hist" class="wrap wide hide">
-  <div class="top"><h2 id="ht"></h2><button class="sm" id="hb">رجوع →</button></div>
-  <div class="top"><div>المعرّف: <b id="hid" style="color:var(--link);font-size:20px"></b></div><button class="sm" id="dm">🗑 حذف العداد</button></div>
+  <div class="top"><h2 id="ht"></h2><button class="sm" id="hb">رجوع ←</button></div>
+  <div class="top"><div><b id="hid" class="hide"></b></div><button class="sm" id="dm">🗑 حذف العداد</button></div>
   <div class="sc"><table><thead><tr><th>رقم الفاتورة</th><th>اسم العداد</th><th>التاريخ</th><th>سابقة</th><th>حالية</th><th>الاستهلاك</th><th>ش1</th><th>ش2</th><th>رسوم</th><th>ضريبة</th><th>إجمالي</th><th>خيارات</th></tr></thead><tbody id="tb"></tbody></table></div>
 </div>
 
 <div id="inv" class="hide">
-  <div class="acts"><button id="pdf">⬇ حفظ PDF</button><button id="sh">⤴ مشاركة</button><button id="ib" class="k">رجوع</button></div>
+  <div class="acts"><button id="pdf">⬇ حفظ PDF</button><button id="sh">⤴ مشاركة</button><button id="ib" class="k">رجوع ←</button></div>
   <div class="sheet" id="sheet"></div>
 </div>
 <div class="toast" id="toast"></div>
@@ -167,7 +167,18 @@ function addDays(i,n){var p=i.split("-"),d=new Date(+p[0],+p[1]-1,+p[2]+n);retur
 function nextDate(i){var p=i.split("-"),d=new Date(+p[0],+p[1],28);return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-28"}
 function hm(ts){var d=new Date(ts);return("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)}
 function mask(e){var v=e.target.value.replace(/\D/g,"").slice(0,8);e.target.value=v.slice(0,2)+(v.length>2?"/"+v.slice(2,4):"")+(v.length>4?"/"+v.slice(4):"")}
-["pd","cd"].forEach(function(i){$(i).addEventListener("input",function(e){mask(e);days()})});
+var MN=["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+function initDS(id){var w=document.querySelector('[data-t="'+id+'"]'),i,y0=new Date().getFullYear(),
+ d='<option value="">يوم</option>',m='<option value="">شهر</option>',y='<option value="">سنة</option>';
+ for(i=1;i<=31;i++)d+='<option>'+i+'</option>';
+ for(i=1;i<=12;i++)m+='<option value="'+i+'">'+i+' - '+MN[i-1]+'</option>';
+ for(i=y0+1;i>=y0-6;i--)y+='<option>'+i+'</option>';
+ w.innerHTML='<select>'+d+'</select><select>'+m+'</select><select>'+y+'</select>';
+ w.addEventListener("change",function(){var c=w.children,a=c[0].value,b=c[1].value,e=c[2].value;
+  $(id).value=(a&&b&&e)?("0"+a).slice(-2)+"/"+("0"+b).slice(-2)+"/"+e:"";days()})}
+function setDS(id){var w=document.querySelector('[data-t="'+id+'"]'),v=($(id).value||"").split("/");
+ w.children[0].value=v[0]?String(+v[0]):"";w.children[1].value=v[1]?String(+v[1]):"";w.children[2].value=v[2]||""}
+initDS("pd");initDS("cd");
 
 var cur=null,last=null,viewR=null;
 function M(id){for(var i=0;i<D.meters.length;i++)if(D.meters[i].id===id)return D.meters[i];return null}
@@ -179,8 +190,8 @@ function home(){
   D.meters.forEach(function(m){
     var l=m.rd.length?m.rd[m.rd.length-1]:null,n=new Date(),ok=false;
     if(l){var p=l.cd.split("-");ok=+p[0]===n.getFullYear()&&+p[1]===n.getMonth()+1}
-    h+='<div class="mc"><div class="h"><span class="bdg'+(ok?'':' w')+'">'+(ok?"مقروء":"بانتظار القراءة")+'</span><span class="nm">'+esc(m.sym||"⚡")+' '+esc(m.name)+'</span></div>'+
-    '<div style="display:flex;gap:8px;margin-top:10px"><div class="pill">🧾 آخر فاتورة: '+(l?f2(l.tot):"—")+'</div><div class="pill">عدد القراءات: '+m.rd.length+'</div></div>'+
+    h+='<div class="mc"><div class="h"><span class="nm">'+esc(m.sym||"⚡")+' '+esc(m.name)+'</span><span class="bdg'+(ok?'':' w')+'">'+(ok?"مقروء":"بانتظار القراءة")+'</span></div>'+
+    '<div style="display:flex;gap:8px;margin-top:10px"><div class="pill">قيمة آخر فاتورة: '+(l?f2(l.tot):"—")+'</div><div class="pill">عدد القراءات: '+m.rd.length+'</div></div>'+
     '<div class="nx">📅 موعد القراءة القادم المقترح<span>'+(l?dmy(nextDate(l.cd)):"—")+'</span></div>'+
     '<div class="ac"><button class="nw" data-a="new" data-id="'+m.id+'">＋ شهر جديد</button><button class="hs" data-a="hist" data-id="'+m.id+'">🕘 السجل</button><button class="ed" data-a="edit" data-id="'+m.id+'">✎ تعديل الاسم والرمز</button></div></div>';
   });
@@ -221,13 +232,13 @@ function openCalc(m){
   cur=m;$("ct").textContent=(m.sym||"⚡")+" "+m.name;
   $("prev").value=m.prev;$("pd").value=m.prevDate?dmy(m.prevDate):"";$("curr").value="";$("cd").value=dmy(today());
   ["p1","m1","p2","fee","tax"].forEach(function(k){$(k).value=m.s[k]});
-  clr();days();show("calc");
+  setDS("pd");setDS("cd");clr();days();show("calc");
 }
 function clr(){$("out").classList.add("hide");$("err").classList.add("hide");last=null}
 function err(t){clr();$("err").textContent=t;$("err").classList.remove("hide")}
 ["p1","m1","p2","fee","tax"].forEach(function(k){$(k).addEventListener("input",function(){var v=parseFloat($(k).value);if(!isNaN(v)&&cur){cur.s[k]=v;save()}})});
 $("cb").addEventListener("click",home);
-$("rst").addEventListener("click",function(){$("curr").value="";$("cd").value=dmy(today());clr();days()});
+$("rst").addEventListener("click",function(){$("curr").value="";$("cd").value=dmy(today());setDS("cd");clr();days()});
 $("go").addEventListener("click",function(){
   var p=parseFloat($("prev").value),c=parseFloat($("curr").value),pd=iso($("pd").value),cd=iso($("cd").value);
   if(isNaN(p)||isNaN(c))return err("أدخل القراءة السابقة والحالية");
