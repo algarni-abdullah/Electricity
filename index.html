@@ -191,9 +191,9 @@ function home(){
     var l=m.rd.length?m.rd[m.rd.length-1]:null,n=new Date(),ok=false;
     if(l){var p=l.cd.split("-");ok=+p[0]===n.getFullYear()&&+p[1]===n.getMonth()+1}
     h+='<div class="mc"><div class="h"><span class="nm">'+esc(m.sym||"⚡")+' '+esc(m.name)+'</span><span class="bdg'+(ok?'':' w')+'">'+(ok?"مقروء":"بانتظار القراءة")+'</span></div>'+
-    '<div style="display:flex;gap:8px;margin-top:10px"><div class="pill">قيمة آخر فاتورة: '+(l?f2(l.tot):"—")+'</div><div class="pill">عدد القراءات: '+m.rd.length+'</div></div>'+
+    '<div style="display:flex;gap:8px;margin-top:10px"><div class="pill">قيمة آخر فاتورة: '+(l?f2(l.tot)+" ريال":"—")+'</div><div class="pill">عدد القراءات: '+m.rd.length+'</div></div>'+
     '<div class="nx">📅 موعد القراءة القادم المقترح<span>'+(l?dmy(nextDate(l.cd)):"—")+'</span></div>'+
-    '<div class="ac"><button class="nw" data-a="new" data-id="'+m.id+'">＋ شهر جديد</button><button class="hs" data-a="hist" data-id="'+m.id+'">🕘 السجل</button><button class="ed" data-a="edit" data-id="'+m.id+'">✎ تعديل الاسم والرمز</button></div></div>';
+    '<div class="ac"><button class="nw" data-a="new" data-id="'+m.id+'">＋ شهر جديد</button><button class="hs" data-a="hist" data-id="'+m.id+'">🕘 السجل</button><button class="ed" data-a="edit" data-id="'+m.id+'">✎ تعديل الاسم</button></div></div>';
   });
   $("grid").innerHTML=h||'<div class="empty">لا توجد عدادات بعد، اضغط «إضافة عداد»</div>';
   show("home");
@@ -202,7 +202,7 @@ $("grid").addEventListener("click",function(e){
   var b=e.target.closest("button");if(!b)return;var m=M(b.dataset.id);if(!m)return;
   if(b.dataset.a==="new")openCalc(m);
   else if(b.dataset.a==="hist")openHist(m);
-  else{var n=prompt("اسم العداد:",m.name);if(n&&n.trim())m.name=n.trim();var s=prompt("الرمز (إيموجي):",m.sym||"⚡");if(s&&s.trim())m.sym=s.trim();save();home()}
+  else{var n=prompt("اسم العداد:",m.name);if(n&&n.trim())m.name=n.trim();save();home()}
 });
 $("addM").addEventListener("click",function(){
   var n=prompt("اسم العداد الجديد:");if(!n||!n.trim())return;
